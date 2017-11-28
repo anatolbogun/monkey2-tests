@@ -1,5 +1,5 @@
 *.buildv*
-*.products/*
+*.products*
 
 .DS_Store
 .DS_Store?
