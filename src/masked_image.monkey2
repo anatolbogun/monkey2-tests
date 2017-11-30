@@ -68,15 +68,15 @@ End
 
 
 Class CanvasLayer Extends Canvas
-	Field Mask:Image
+	Field Mask:MaskedImage
 	
 	Function Create:CanvasLayer ( maskImageKey:String, width:Float, height:Float, shaderId:String = "mask" )
 		Local pixmap := New Pixmap( width, height, PixelFormat.RGBA8 )
-		Local mask := MaskedImage.Create( pixmap, maskImageKey, shaderId, TextureFlags.Dynamic )
+		Local mask := MaskedImage.Create( pixmap, maskImageKey, shaderId, TextureFlags.FilterMipmap ) ' TextureFlags.Dynamic ?
 		Return New CanvasLayer( mask )
 	End
 
-	Method New ( image:Image )
+	Method New ( image:MaskedImage )
 		Super.New( image )
 		Mask = image
 	End
