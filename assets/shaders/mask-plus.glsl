@@ -34,7 +34,7 @@ void main(){
 	vec4 maskColor = texture2D( m_MaskTexture, maskCoord );
 	vec4 imageColor = texture2D( m_ImageTexture0, v_TexCoord0 );
 	gl_FragColor.rgba = imageColor.rgba * m_HighlightColor.rgba;
-	gl_FragColor.a *= ( maskColor.r + maskColor.g + maskColor.b ) / 3.0;
+	gl_FragColor.rgba *= ( maskColor.r + maskColor.g + maskColor.b ) / 3.0;
 #endif
 
 }
