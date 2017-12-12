@@ -26,20 +26,18 @@ uniform vec2 m_Resolution;
 uniform sampler2D m_ImageTexture0;
 uniform sampler2D m_MaskTexture;
 uniform vec4 m_HighlightColor;
+uniform vec4 m_AmbientColor;
 uniform vec2 m_Offset;
 
 void main(){
-	// const float PI = 3.1415926535897932384626433832795;
 
 #if MX2_RENDERPASS==0
 	vec2 maskCoord = v_TexCoord0 - m_Offset / m_Resolution;
 	vec4 maskColor = texture2D( m_MaskTexture, maskCoord );
 	vec4 imageColor = texture2D( m_ImageTexture0, v_TexCoord0 );
-	gl_FragColor.rgba = imageColor.rgba * m_HighlightColor.rgba;
-	gl_FragColor.rgba *= ( maskColor.r + maskColor.g + maskColor.b ) / 3.0;
-	// float circle = floor( clamp(pow(sin( v_TexCoord0.x * PI) * sin( v_TexCoord0.y * PI) * 0.5 + 0.5 ,2),0.49,0.5) + 0.5 );
-	// gl_FragColor.rgba = vec4(circle);
-	
+	float maskIntensity = ( maskColor.r + maskColor.g + maskColor.b ) / 3.0;
+	gl_FragColor.rgba = imageColor.rgba * ( m_HighlightColor.rgba * maskIntensity + m_AmbientColor.rgba * ( 1.0 - maskIntensity ) );
+	// gl_FragColor.rgba *= ( maskColor.r + maskColor.g + maskColor.b ) / 3.0;
 #endif
 
 }
